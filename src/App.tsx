@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Check, ChevronDown, PlayCircle } from "lucide-react";
 
 type Currency = "pkr" | "usd";
@@ -295,37 +295,6 @@ const curriculumModules = [
   },
 ];
 
-function HeroCard({
-  image,
-  title,
-  subtitle,
-  className,
-}: {
-  image: string;
-  title: string;
-  subtitle: string;
-  className?: string;
-}) {
-  return (
-    <div
-      className={`relative overflow-hidden rounded-[26px] border border-black/8 bg-[#e9e4dc] ${className ?? ""}`}
-    >
-      <img
-        src={image}
-        alt={title}
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#171717]/60 via-[#171717]/15 to-transparent" />
-      <div className="absolute bottom-4 left-4 right-4">
-        <h3 className="text-[42px] font-black leading-none tracking-[-0.06em] text-white">
-          {title}
-        </h3>
-        <p className="mt-1 text-sm font-medium text-white/90">{subtitle}</p>
-      </div>
-    </div>
-  );
-}
-
 function TestimonialRow({
   images,
   reverse = false,
@@ -364,7 +333,6 @@ export default function TradingHeroSection() {
   const [activeSection, setActiveSection] = useState("#overview");
   const [openModule, setOpenModule] = useState(0);
   const [currency, setCurrency] = useState<Currency>("pkr");
-  const [heroOffset, setHeroOffset] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -394,13 +362,6 @@ export default function TradingHeroSection() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setHeroOffset((prev) => (prev + 1) % showcaseRows.length);
-    }, 2600);
-    return () => window.clearInterval(timer);
-  }, []);
-
   const navItems = useMemo(
     () => [
       { label: "Overview", href: "#overview" },
@@ -418,9 +379,6 @@ export default function TradingHeroSection() {
     const amount = plan.monthly[currency];
     return currency === "pkr" ? `₨${amount.toLocaleString()}` : `$${amount}`;
   };
-
-  const heroIndex = (offset: number) =>
-    (heroOffset + offset) % showcaseRows.length;
 
   const testimonialImages = [
     "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=800&q=80",
@@ -465,7 +423,7 @@ export default function TradingHeroSection() {
               <img
                 src="/tenet-logo.png"
                 alt="The Trade School"
-                className="h-16z   w-auto object-contain"
+                className="h-16   w-auto object-contain"
               />
             </div>
 
@@ -505,75 +463,131 @@ export default function TradingHeroSection() {
         <div className="relative w-full px-2 pb-12 pt-28 lg:px-6 lg:pb-16">
           <div className="overflow-hidden rounded-[36px] border border-black/6 bg-[#f7f4ee]/95 shadow-[0_20px_70px_rgba(24,24,24,0.08)]">
             <div className="px-4 py-8 lg:px-10 lg:py-12">
-              <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+              <div className="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
                 <div>
-                  <h1 className="max-w-[860px] text-5xl font-black uppercase leading-[0.88] tracking-[-0.06em] text-[#111111] sm:text-6xl lg:text-[96px]">
-                    Learn It. Build It.
+                  <div className="mb-4 flex items-center gap-3 text-sm font-semibold text-[#171717]">
+                    <span className="text-xl leading-none text-[#d7a24f]">★</span>
+                    <span>4.9/5 from Trade School members</span>
+                  </div>
+
+                  <h1 className="max-w-[880px] text-5xl font-black uppercase leading-[0.9] tracking-[-0.06em] text-[#111111] sm:text-6xl lg:text-[88px]">
+                    Trade smarter;
                     <br />
-                    Monetize It.
+                    grow with structure.
                   </h1>
                 </div>
 
-                <div className="max-w-[540px] lg:justify-self-end">
+                <div className="max-w-[560px] lg:justify-self-end">
                   <p className="text-lg leading-8 text-[#4f4a45] sm:text-xl">
-                    From trade recaps to winning trade screenshots and member
-                    feedback, our trading community gives students the structure
-                    they need to build confidence and consistency.
+                    The Trade School helps students learn market structure,
+                    review real setups, and build disciplined trading habits in
+                    one focused learning dashboard.
                   </p>
 
                   <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                    <input
-                      type="email"
-                      placeholder="Enter your email"
-                      className="h-14 flex-1 rounded-full border border-black/15 bg-[#fffdf9] px-5 text-base text-[#171717] outline-none placeholder:text-[#7a746d]"
-                    />
-                    <button className="inline-flex h-14 items-center justify-center rounded-full bg-[#2d7a52] px-7 text-base font-semibold text-white transition hover:bg-[#266847]">
-                      Get Started
+                    <button className="inline-flex h-14 items-center justify-center rounded-[10px] bg-[#2d7a52] px-7 text-base font-semibold text-white shadow-[0_10px_26px_rgba(45,122,82,0.24)] transition hover:bg-[#266847]">
+                      Start Learning
+                    </button>
+                    <button className="inline-flex h-14 items-center justify-center rounded-[10px] border border-black/10 bg-[#fffdf9] px-7 text-base font-semibold text-[#171717] transition hover:bg-[#f0ece5]">
+                      View Curriculum
                     </button>
                   </div>
-
-                  <p className="mt-4 text-sm leading-6 text-[#7a746d]">
-                    Join to access education, member wins, trade recaps, and
-                    daily learning resources.
-                  </p>
                 </div>
               </div>
 
-              <div className="mt-12 hidden gap-5 lg:grid lg:grid-cols-[0.42fr_0.64fr_0.58fr_0.42fr] lg:grid-rows-[140px_320px_210px]">
-                <HeroCard
-                  image={showcaseRows[heroIndex(0)].slides[0]}
-                  title="10K+"
-                  subtitle="Trade recap views"
-                  className="row-span-2"
-                />
-                <HeroCard
-                  image={showcaseRows[heroIndex(1)].slides[1]}
-                  title="Feedback"
-                  subtitle="Member growth stories"
-                  className="row-span-3 rounded-[30px]"
-                />
-                <HeroCard
-                  image={showcaseRows[heroIndex(2)].slides[2]}
-                  title="Winning Trades"
-                  subtitle="Shared by members"
-                  className="row-span-2 rounded-[30px]"
-                />
-                <HeroCard
-                  image={showcaseRows[heroIndex(3)].slides[0]}
-                  title="1000+"
-                  subtitle="Community highlights"
-                  className="row-span-2"
-                />
-                <HeroCard
-                  image={showcaseRows[heroIndex(4)].slides[1]}
-                  title="Recaps"
-                  subtitle="Daily market learning"
-                />
-                <HeroCard
-                  image={showcaseRows[heroIndex(5)].slides[2]}
-                  title="Results"
-                  subtitle="Confidence with structure"
-                />
+              <div className="mt-12 grid gap-4 lg:grid-cols-[0.72fr_1.08fr_1.44fr]">
+                <div className="flex min-h-[300px] flex-col justify-between rounded-[16px] bg-[#789382] p-6 text-white shadow-sm lg:min-h-[340px]">
+                  <div>
+                    <h3 className="max-w-[220px] text-2xl font-medium leading-7">
+                      Guided trading education
+                    </h3>
+                    <p className="mt-3 text-sm leading-6 text-white/88">
+                      Clear lessons, market recaps, and community feedback for
+                      better decision making.
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-xs font-medium text-white/75">
+                      Join the program with
+                    </p>
+                    <div className="mt-3 flex items-center gap-3">
+                      <div className="flex -space-x-2">
+                        {["A", "H", "S"].map((member) => (
+                          <div
+                            key={member}
+                            className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#789382] bg-[#f7f4ee] text-xs font-bold text-[#2d7a52]"
+                          >
+                            {member}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="text-sm font-semibold leading-4">
+                        5.8k+
+                        <span className="block text-xs font-medium text-white/78">
+                          Members
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="min-h-[300px] rounded-[16px] bg-[#e8dfc9] p-6 text-[#171717] shadow-sm lg:min-h-[340px]">
+                  <div className="flex items-center justify-between border-b border-black/10 pb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-[#fffaf0] text-[#d7a24f]">
+                        <PlayCircle className="h-5 w-5" />
+                      </div>
+                      <span className="text-sm font-semibold">
+                        Weekly Setup Goal
+                      </span>
+                    </div>
+                    <div className="text-2xl font-medium tracking-[-0.04em]">
+                      12
+                      <span className="ml-1 text-sm tracking-normal text-[#5f5a54]">
+                        reviews
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="pt-24">
+                    <div className="flex items-end gap-2">
+                      <span className="text-[34px] font-medium leading-none tracking-[-0.05em]">
+                        8
+                      </span>
+                      <span className="pb-1 text-sm font-medium text-[#5f5a54]">
+                        setups studied today
+                      </span>
+                    </div>
+
+                    <div className="mt-5 flex h-12 items-end gap-1">
+                      {Array.from({ length: 34 }).map((_, index) => (
+                        <span
+                          key={index}
+                          className={`block w-2 rounded-full ${
+                            index < 25 ? "bg-[#3f321f]" : "bg-white/75"
+                          }`}
+                          style={{
+                            height: `${18 + ((index * 7) % 24)}px`,
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="relative min-h-[300px] overflow-hidden rounded-[16px] bg-[#d8d1bf] shadow-sm lg:min-h-[340px]">
+                  <img
+                    src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&q=80"
+                    alt="Trading dashboard preview"
+                    className="absolute inset-0 h-full w-full object-cover saturate-[0.78] sepia-[0.12]"
+                  />
+                  <div className="absolute inset-0 bg-[#2d7a52]/18 mix-blend-multiply" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#173322]/55 via-[#e8dfc9]/8 to-[#f7f4ee]/22" />
+                  <div className="absolute bottom-5 left-5 rounded-[8px] bg-[#fffdf9] px-5 py-3 text-sm font-semibold text-[#171717] shadow-lg">
+                    Trading skills in your pocket
+                  </div>
+                </div>
               </div>
             </div>
 
