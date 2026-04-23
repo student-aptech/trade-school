@@ -1,4 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  type CSSProperties,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   ArrowRight,
   Check,
@@ -469,7 +475,7 @@ function TestimonialRow({
   return (
     <div className="mb-5 overflow-hidden">
       <div
-        className="flex gap-5"
+        className="motion-ticker flex gap-5"
         style={{
           animation: `${reverse ? "scrollRight" : "scrollLeft"} 22s linear infinite`,
         }}
@@ -477,7 +483,7 @@ function TestimonialRow({
         {list.map((img, i) => (
           <div
             key={`${img}-${i}`}
-            className="h-[160px] min-w-[340px] overflow-hidden rounded-[20px] border border-[#2f80ff]/10 bg-[#111827] shadow-sm"
+            className="motion-lift h-[160px] min-w-[340px] overflow-hidden rounded-[20px] border border-[#2f80ff]/10 bg-[#111827] shadow-sm"
           >
             <img
               src={img}
@@ -601,6 +607,36 @@ export default function TradingHeroSection() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const revealItems = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-reveal]"),
+    );
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.14 },
+    );
+
+    revealItems.forEach((item, index) => {
+      item.style.setProperty("--reveal-delay", `${(index % 5) * 70}ms`);
+      observer.observe(item);
+    });
+
+    return () => observer.disconnect();
+  }, [activeProofTab, openModule]);
+
   return (
     <>
       <style>{`
@@ -660,7 +696,7 @@ export default function TradingHeroSection() {
           fontFamily: '"Inter", "SF Pro Display", "Segoe UI", sans-serif',
         }}
       >
-        <div className="fixed left-0 top-0 z-50 w-full border-b border-[#2f80ff]/10 bg-[#05070b]/92 backdrop-blur-xl">
+        <div className="fixed left-0 top-0 z-50 w-full border-b border-[#2f80ff]/10 bg-[#05070b]/92 backdrop-blur-xl motion-rise">
           <div className="mx-auto grid w-full max-w-[1240px] grid-cols-[auto_1fr_auto] items-center gap-6 px-5 py-4 lg:px-8 xl:px-5">
             <div className="flex min-w-[150px] items-center">
               <img
@@ -681,7 +717,7 @@ export default function TradingHeroSection() {
                     if (el)
                       el.scrollIntoView({ behavior: "smooth", block: "start" });
                   }}
-                  className={`whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium tracking-wide transition xl:px-4 ${
+                  className={`whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium tracking-wide transition xl:px-4 motion-lift ${
                     activeSection === item.href
                       ? "bg-[#2f80ff] text-[#070a11]"
                       : "text-[#dbe7f5]/62 hover:bg-[#172033] hover:text-[#2f80ff]"
@@ -692,8 +728,9 @@ export default function TradingHeroSection() {
               ))}
             </nav>
 
-            <button className="inline-flex h-10 min-w-[142px] shrink-0 items-center justify-center gap-2 justify-self-end rounded-full bg-[#2f80ff] px-6 text-sm font-semibold text-[#070a11] transition hover:bg-[#7bb6ff]">
-              Get started <ArrowRight className="h-4 w-4" />
+            <button className="motion-shine inline-flex h-10 min-w-[142px] shrink-0 items-center justify-center gap-2 justify-self-end rounded-full bg-[#2f80ff] px-6 text-sm font-semibold text-[#070a11] transition hover:bg-[#7bb6ff]">
+              Enroll Now
+              <ArrowRight className="h-4 w-4" />
             </button>
           </div>
         </div>
@@ -706,38 +743,50 @@ export default function TradingHeroSection() {
         <div className="relative mx-auto w-full max-w-[1240px] px-5 pb-16 pt-32 lg:px-8 lg:pb-20 lg:pt-36 xl:px-5">
           <div className="grid min-h-[640px] items-center gap-10 lg:grid-cols-[0.98fr_1.02fr]">
             <div className="relative z-10">
-              <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#2f80ff]/80 px-3.5 py-2 text-[13px] font-medium text-[#2f80ff]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#2f80ff]" />
+              <div className="motion-rise mb-8 inline-flex items-center gap-2 rounded-full border border-[#2f80ff]/80 px-3.5 py-2 text-[13px] font-medium text-[#2f80ff]">
+                <span className="motion-pulse-dot h-1.5 w-1.5 rounded-full bg-[#2f80ff]" />
                 Trusted by 3,400+ traders
               </div>
 
-              <h1 className="max-w-[560px] text-[58px] font-black uppercase leading-[0.86] tracking-[-0.045em] text-[#f8fbff] sm:text-[88px] lg:text-[78px] xl:text-[88px]">
+              <h1
+                className="motion-rise max-w-[560px] text-[58px] font-black uppercase leading-[0.86] tracking-[-0.045em] text-[#f8fbff] sm:text-[88px] lg:text-[78px] xl:text-[88px]"
+                style={{ "--motion-delay": "120ms" } as CSSProperties}
+              >
                 Content
                 <span className="block text-[#2f80ff]">that</span>
                 converts
               </h1>
 
-              <p className="mt-8 max-w-[365px] text-[15px] leading-6 text-[#dbe7f5]/60">
+              <p
+                className="motion-rise mt-8 max-w-[365px] text-[15px] leading-6 text-[#dbe7f5]/60"
+                style={{ "--motion-delay": "220ms" } as CSSProperties}
+              >
                 Unlock your brand's potential with our social media strategies,
                 from website audits to ready-to-post content that converts.
               </p>
 
-              <div className="mt-6 flex flex-wrap items-center gap-3">
+              <div
+                className="motion-rise mt-6 flex flex-wrap items-center gap-3"
+                style={{ "--motion-delay": "320ms" } as CSSProperties}
+              >
                 <a
                   href="#pricing"
-                  className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#2f80ff] px-7 text-[14px] font-semibold text-[#070a11] transition hover:bg-[#7bb6ff]"
+                  className="motion-shine inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#2f80ff] px-7 text-[14px] font-semibold text-[#070a11] transition hover:bg-[#7bb6ff]"
                 >
                   Start for free <ArrowRight className="h-4 w-4" />
                 </a>
                 <a
                   href="#learning-experience"
-                  className="inline-flex h-11 items-center justify-center rounded-full border border-[#dbe7f5]/40 px-6 text-[14px] font-semibold text-[#f8fbff] transition hover:border-[#2f80ff] hover:text-[#2f80ff]"
+                  className="motion-lift inline-flex h-11 items-center justify-center rounded-full border border-[#dbe7f5]/40 px-6 text-[14px] font-semibold text-[#f8fbff] transition hover:border-[#2f80ff] hover:text-[#2f80ff]"
                 >
                   See our work
                 </a>
               </div>
 
-              <div className="mt-8 grid max-w-[360px] grid-cols-3 gap-4">
+              <div
+                className="motion-rise mt-8 grid max-w-[360px] grid-cols-3 gap-4"
+                style={{ "--motion-delay": "420ms" } as CSSProperties}
+              >
                 {[
                   ["98%", "Satisfaction"],
                   ["12K+", "Videos made"],
@@ -759,7 +808,7 @@ export default function TradingHeroSection() {
               <button
                 type="button"
                 onClick={() => setActiveHeroVideo("reel")}
-                className="group absolute left-[6%] top-[34%] hidden w-[260px] -rotate-[17deg] overflow-hidden rounded-[6px] bg-[#111827] text-left shadow-[0_28px_70px_rgba(0,0,0,0.34)] transition duration-500 hover:z-50 hover:-translate-y-2 hover:rotate-[-11deg] hover:shadow-[0_34px_86px_rgba(0,0,0,0.48)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2f80ff] sm:block lg:left-[2%] lg:w-[300px]"
+                className="group absolute left-[6%] top-[34%] hidden w-[260px] -rotate-[17deg] overflow-hidden rounded-t-[34px] rounded-b-[8px] bg-[#111827] text-left shadow-[0_28px_70px_rgba(0,0,0,0.34)] transition duration-500 hover:z-50 hover:-translate-y-2 hover:rotate-[-11deg] hover:shadow-[0_34px_86px_rgba(0,0,0,0.48)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2f80ff] sm:block lg:left-[2%] lg:w-[300px]"
                 aria-label="Play brand identity reel"
               >
                 <div className="relative h-[235px]">
@@ -786,7 +835,7 @@ export default function TradingHeroSection() {
                 </div>
               </button>
 
-              <div className="absolute left-[26%] top-[12%] z-20 hidden items-center gap-3 rounded-[10px] bg-[#172033] px-4 py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.22)] md:flex">
+              <div className="motion-soft-pop absolute left-[26%] top-[8%] z-20 hidden items-center gap-3 rounded-[10px] bg-[#172033] px-4 py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.22)] md:flex">
                 <span className="flex h-9 w-9 items-center justify-center rounded-[8px] bg-[#2f80ff] text-[#070a11]">
                   <Play className="h-4 w-4 fill-current" />
                 </span>
@@ -848,16 +897,10 @@ export default function TradingHeroSection() {
                 </div>
               </button>
 
-              <button
-                type="button"
-                onClick={() => setActiveHeroVideo("campaign")}
-                className="absolute right-[1%] top-[24%] z-40 hidden h-14 w-14 items-center justify-center rounded-full bg-white/16 text-white backdrop-blur-sm transition hover:bg-[#2f80ff] hover:text-[#070a11] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2f80ff] md:flex"
-                aria-label="Play campaign preview"
+              <div
+                className="motion-soft-pop absolute bottom-[18%] right-[7%] z-40 hidden items-center gap-3 rounded-[10px] bg-[#172033] px-4 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.24)] md:flex"
+                style={{ "--motion-delay": "260ms" } as CSSProperties}
               >
-                <Play className="h-5 w-5 rotate-[-21deg] fill-current" />
-              </button>
-
-              <div className="absolute bottom-[18%] right-[7%] z-40 hidden items-center gap-3 rounded-[10px] bg-[#172033] px-4 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.24)] md:flex">
                 <span className="flex h-9 w-9 items-center justify-center rounded-[8px] bg-[#2f80ff] text-[#070a11]">
                   <Heart className="h-4 w-4 fill-current text-[#070a11]" />
                 </span>
@@ -925,7 +968,7 @@ export default function TradingHeroSection() {
           ref={heroBenefitsRef}
           className="relative mx-auto w-full max-w-[1240px] px-5 pb-20 pt-8 lg:px-8 lg:pb-28 lg:pt-14 xl:px-5"
         >
-          <div className="pointer-events-none absolute left-1/2 top-[40%] h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2f80ff]/7 blur-3xl" />
+          <div className="motion-breathe pointer-events-none absolute left-1/2 top-[40%] h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2f80ff]/7 blur-3xl" />
           <div
             className={`relative transition-all duration-700 ${
               benefitsInView
@@ -992,7 +1035,10 @@ export default function TradingHeroSection() {
           </div>
         </div>
 
-        <div className="relative mx-auto grid w-full max-w-[1240px] gap-10 px-5 pb-20 lg:grid-cols-[0.76fr_1.24fr] lg:px-8 lg:pb-28 xl:px-5">
+        <div
+          data-reveal
+          className="relative mx-auto grid w-full max-w-[1240px] gap-10 px-5 pb-20 lg:grid-cols-[0.76fr_1.24fr] lg:px-8 lg:pb-28 xl:px-5"
+        >
           <div className="flex flex-col justify-center">
             <h2 className="max-w-[430px] text-[54px] font-black lowercase leading-[0.88] tracking-[-0.045em] text-[#f8fbff] sm:text-[72px] lg:text-[80px]">
               data that
@@ -1026,7 +1072,8 @@ export default function TradingHeroSection() {
                 {proofTabs[activeProofTab].cards.map((card, index) => (
                   <div
                     key={`${proofTabs[activeProofTab].label}-${card.title}`}
-                    className="min-w-[280px] overflow-hidden rounded-[26px] bg-[#f8fbff] text-[#070a11] shadow-[0_22px_70px_rgba(0,0,0,0.22)] sm:min-w-[330px]"
+                    data-reveal
+                    className="group motion-lift min-w-[280px] overflow-hidden rounded-[26px] bg-[#f8fbff] text-[#070a11] shadow-[0_22px_70px_rgba(0,0,0,0.22)] sm:min-w-[330px]"
                     style={{
                       animation: `heroVideoCardIn ${360 + index * 70}ms cubic-bezier(.2,.8,.2,1) both`,
                     }}
@@ -1035,7 +1082,7 @@ export default function TradingHeroSection() {
                       <img
                         src={card.image}
                         alt={card.title}
-                        className="h-full w-full object-cover"
+                        className="motion-image h-full w-full object-cover"
                       />
                     </div>
                     <div className="p-6">
@@ -1265,6 +1312,7 @@ export default function TradingHeroSection() {
 
             <div
               id="curriculum"
+              data-reveal
               className="scroll-mt-28 border-t border-[#2f80ff]/6 px-0 py-14 lg:py-16"
             >
               <div className="mx-auto max-w-[1360px]">
@@ -1292,7 +1340,8 @@ export default function TradingHeroSection() {
                       ].map(([value, label]) => (
                         <div
                           key={label}
-                          className="rounded-[18px] border border-[#2f80ff]/12 bg-[#111827] p-4"
+                          data-reveal
+                          className="motion-lift rounded-[18px] border border-[#2f80ff]/12 bg-[#111827] p-4"
                         >
                           <p className="text-3xl font-black leading-none text-[#2f80ff]">
                             {value}
@@ -1305,20 +1354,23 @@ export default function TradingHeroSection() {
                     </div>
                   </div>
 
-                  <div className="relative overflow-hidden rounded-[34px] border border-[#2f80ff]/12 bg-[#111827] p-4 shadow-[0_28px_90px_rgba(0,0,0,0.28)]">
+                  <div
+                    data-reveal
+                    className="relative overflow-hidden rounded-[34px] border border-[#2f80ff]/12 bg-[#111827] p-4 shadow-[0_28px_90px_rgba(0,0,0,0.28)]"
+                  >
                     <div className="absolute right-0 top-0 h-44 w-44 rounded-full bg-[#2f80ff]/10 blur-3xl" />
                     <div className="grid gap-4 lg:grid-cols-[0.95fr_1.05fr]">
                       <div className="relative min-h-[360px] overflow-hidden rounded-[26px] bg-black">
                         <img
                           src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&q=80"
                           alt={curriculumModules[openModule].title}
-                          className="absolute inset-0 h-full w-full object-cover opacity-80"
+                          className="motion-image absolute inset-0 h-full w-full object-cover opacity-80"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-transparent" />
                         <div className="absolute left-5 top-5 rounded-full bg-[#dbe7f5] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[#070a11]">
                           Module {String(openModule + 1).padStart(2, "0")}
                         </div>
-                        <button className="absolute left-1/2 top-1/2 flex h-18 w-18 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#2f80ff] text-[#070a11] shadow-[0_18px_46px_rgba(47,128,255,0.24)]">
+                        <button className="motion-shine absolute left-1/2 top-1/2 flex h-18 w-18 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#2f80ff] text-[#070a11] shadow-[0_18px_46px_rgba(47,128,255,0.24)]">
                           <PlayCircle className="h-9 w-9" />
                         </button>
                         <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -1383,7 +1435,8 @@ export default function TradingHeroSection() {
                             key={module.title}
                             type="button"
                             onClick={() => setOpenModule(index)}
-                            className={`group rounded-[20px] border p-4 text-left transition ${
+                            data-reveal
+                            className={`group motion-lift rounded-[20px] border p-4 text-left transition ${
                               isOpen
                                 ? "border-[#2f80ff] bg-[#2f80ff] text-[#070a11]"
                                 : "border-[#2f80ff]/10 bg-[#070a11] text-[#f8fbff] hover:border-[#2f80ff]/45"
@@ -1590,7 +1643,7 @@ export default function TradingHeroSection() {
 
             <div className="my-14 h-[1px] w-full bg-gradient-to-r from-transparent via-[#2f80ff]/10 to-transparent" />
 
-            <div id="benefits" className="mt-20 scroll-mt-28">
+            <div id="benefits" data-reveal className="mt-20 scroll-mt-28">
               <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
                 <div>
                   <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#2f80ff]">
@@ -1630,7 +1683,8 @@ export default function TradingHeroSection() {
                   ].map(([step, title, text]) => (
                     <div
                       key={title}
-                      className="rounded-[26px] border border-[#2f80ff]/10 bg-[#111827] p-5"
+                      data-reveal
+                      className="motion-lift rounded-[26px] border border-[#2f80ff]/10 bg-[#111827] p-5"
                     >
                       <p className="text-xs font-black tracking-[0.16em] text-[#2f80ff]">
                         {step}
@@ -1647,11 +1701,14 @@ export default function TradingHeroSection() {
               </div>
 
               <div className="mt-8 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
-                <div className="relative min-h-[520px] overflow-hidden rounded-[36px] border border-[#2f80ff]/10 bg-black">
+                <div
+                  data-reveal
+                  className="group relative min-h-[520px] overflow-hidden rounded-[36px] border border-[#2f80ff]/10 bg-black"
+                >
                   <img
                     src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&w=1800&q=80"
                     alt="Trading workspace"
-                    className="absolute inset-0 h-full w-full object-cover opacity-72"
+                    className="motion-image absolute inset-0 h-full w-full object-cover opacity-72"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                   <div className="absolute left-6 top-6 inline-flex items-center gap-3 rounded-full bg-[#dbe7f5] px-4 py-2 text-sm font-bold text-[#070a11] shadow">
@@ -1673,7 +1730,8 @@ export default function TradingHeroSection() {
                   {benefits.map((item, idx) => (
                     <div
                       key={item}
-                      className={`relative min-h-[154px] overflow-hidden rounded-[26px] border p-5 ${
+                      data-reveal
+                      className={`motion-lift relative min-h-[154px] overflow-hidden rounded-[26px] border p-5 ${
                         idx === 0 || idx === 3
                           ? "border-[#2f80ff]/25 bg-[#2f80ff] text-[#070a11]"
                           : "border-[#2f80ff]/10 bg-[#111827] text-[#f8fbff]"
@@ -1778,7 +1836,7 @@ export default function TradingHeroSection() {
 
             <div className="my-14 h-[1px] w-full bg-gradient-to-r from-transparent via-[#2f80ff]/10 to-transparent" />
 
-            <div id="community-wins" className="mt-20 scroll-mt-28">
+            <div id="community-wins" data-reveal className="mt-20 scroll-mt-28">
               <div className="mb-10 text-center">
                 <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#2f80ff]">
                   Community Wins
@@ -1792,7 +1850,10 @@ export default function TradingHeroSection() {
                 </p>
               </div>
 
-              <div className="overflow-hidden rounded-[34px] border border-[#2f80ff]/8 bg-[#070a11] p-4 shadow-[0_12px_30px_rgba(0,0,0,0.06)]">
+              <div
+                data-reveal
+                className="overflow-hidden rounded-[34px] border border-[#2f80ff]/8 bg-[#070a11] p-4 shadow-[0_12px_30px_rgba(0,0,0,0.06)]"
+              >
                 <div className="grid gap-4 lg:grid-cols-3">
                   {[0, 1, 2].map((columnIndex) => {
                     const items = communityWinItems.filter(
@@ -1810,7 +1871,7 @@ export default function TradingHeroSection() {
                         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-20 bg-gradient-to-t from-[#111827] to-transparent" />
 
                         <div
-                          className="flex flex-col gap-4 p-4"
+                          className="motion-ticker flex flex-col gap-4 p-4"
                           style={{
                             animation: `${reverse ? "communityWinsUpReverse" : "communityWinsUp"} 24s linear infinite`,
                           }}
@@ -1818,7 +1879,7 @@ export default function TradingHeroSection() {
                           {duplicated.map((item, idx) => (
                             <div
                               key={`${item.user}-${item.setup}-${idx}`}
-                              className="rounded-[22px] border border-[#2f80ff]/8 bg-[#131313] p-4 text-white shadow-[0_10px_24px_rgba(0,0,0,0.18)]"
+                              className="motion-lift rounded-[22px] border border-[#2f80ff]/8 bg-[#131313] p-4 text-white shadow-[0_10px_24px_rgba(0,0,0,0.18)]"
                             >
                               <div className="flex items-start justify-between gap-3 border-b border-white/10 pb-3">
                                 <div>
@@ -1881,7 +1942,11 @@ export default function TradingHeroSection() {
 
             <div className="my-14 h-[1px] w-full bg-gradient-to-r from-transparent via-[#2f80ff]/10 to-transparent" />
 
-            <div id="learning-experience" className="mt-20 scroll-mt-28">
+            <div
+              id="learning-experience"
+              data-reveal
+              className="mt-20 scroll-mt-28"
+            >
               <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
                 <div>
                   <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#2f80ff]">
@@ -1904,7 +1969,10 @@ export default function TradingHeroSection() {
               </div>
 
               <div className="mt-10 grid gap-5 lg:grid-cols-[1.08fr_0.92fr]">
-                <div className="relative min-h-[620px] overflow-hidden rounded-[38px] border border-[#2f80ff]/10 bg-[#070a11] p-5">
+                <div
+                  data-reveal
+                  className="relative min-h-[620px] overflow-hidden rounded-[38px] border border-[#2f80ff]/10 bg-[#070a11] p-5"
+                >
                   <img
                     src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=1800&q=80"
                     alt="Learning dashboard"
@@ -1936,7 +2004,8 @@ export default function TradingHeroSection() {
                         ].map(([value, label]) => (
                           <div
                             key={label}
-                            className="rounded-[18px] border border-[#2f80ff]/10 bg-[#070a11] p-4"
+                            data-reveal
+                            className="motion-lift rounded-[18px] border border-[#2f80ff]/10 bg-[#070a11] p-4"
                           >
                             <p className="text-3xl font-black leading-none text-[#2f80ff]">
                               {value}
@@ -1966,7 +2035,8 @@ export default function TradingHeroSection() {
                       ].map(([title, text], index) => (
                         <div
                           key={title}
-                          className={`rounded-[24px] border p-5 ${
+                          data-reveal
+                          className={`motion-lift rounded-[24px] border p-5 ${
                             index === 1
                               ? "border-[#2f80ff]/30 bg-[#2f80ff] text-[#070a11]"
                               : "border-[#2f80ff]/10 bg-[#111827]/86 text-[#f8fbff]"
@@ -2007,13 +2077,14 @@ export default function TradingHeroSection() {
                   {showcaseRows.slice(0, 4).map((row, index) => (
                     <div
                       key={row.title}
-                      className="group grid gap-4 rounded-[28px] border border-[#2f80ff]/10 bg-[#111827] p-4 transition hover:border-[#2f80ff]/35 sm:grid-cols-[150px_1fr]"
+                      data-reveal
+                      className="group motion-lift grid gap-4 rounded-[28px] border border-[#2f80ff]/10 bg-[#111827] p-4 transition hover:border-[#2f80ff]/35 sm:grid-cols-[150px_1fr]"
                     >
                       <div className="relative h-[140px] overflow-hidden rounded-[22px] bg-black sm:h-full">
                         <img
                           src={row.slides[0]}
                           alt={row.title}
-                          className="h-full w-full object-cover opacity-78 transition duration-500 group-hover:scale-105"
+                          className="motion-image h-full w-full object-cover opacity-78"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                         <span className="absolute bottom-3 left-3 rounded-full bg-[#2f80ff] px-3 py-1 text-xs font-black text-[#070a11]">
@@ -2039,7 +2110,7 @@ export default function TradingHeroSection() {
 
             <div className="my-14 h-[1px] w-full bg-gradient-to-r from-transparent via-[#2f80ff]/10 to-transparent" />
 
-            <div id="testimonials" className="mt-20 scroll-mt-28">
+            <div id="testimonials" data-reveal className="mt-20 scroll-mt-28">
               <div className="mb-10 text-center">
                 <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#2f80ff]">
                   Testimonials
@@ -2056,7 +2127,7 @@ export default function TradingHeroSection() {
 
             <div className="my-14 h-[1px] w-full bg-gradient-to-r from-transparent via-[#2f80ff]/10 to-transparent" />
 
-            <div id="pricing" className="mt-20 scroll-mt-28">
+            <div id="pricing" data-reveal className="mt-20 scroll-mt-28">
               <div className="mb-10 text-center">
                 <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#2f80ff]">
                   Pricing
@@ -2074,7 +2145,8 @@ export default function TradingHeroSection() {
                 {pricingPlans.map((plan) => (
                   <div
                     key={plan.name}
-                    className={`relative overflow-hidden rounded-[28px] border p-6 shadow-sm transition ${
+                    data-reveal
+                    className={`motion-lift relative overflow-hidden rounded-[28px] border p-6 shadow-sm transition ${
                       plan.highlighted
                         ? "border-[#2f80ff]/25 bg-[#101827] shadow-[0_14px_30px_rgba(47,128,255,0.10)]"
                         : "border-[#2f80ff]/8 bg-[#111827]"
@@ -2151,7 +2223,7 @@ export default function TradingHeroSection() {
                     </div>
 
                     <button
-                      className={`mt-8 inline-flex w-full items-center justify-center rounded-full px-4 py-3.5 text-[14px] font-semibold transition ${
+                      className={`motion-shine mt-8 inline-flex w-full items-center justify-center rounded-full px-4 py-3.5 text-[14px] font-semibold transition ${
                         plan.highlighted
                           ? "bg-[#2f80ff] text-[#070a11] hover:bg-[#7bb6ff]"
                           : "border border-[#2f80ff]/10 bg-[#111827] text-[#f8fbff] hover:bg-[#172033]"
