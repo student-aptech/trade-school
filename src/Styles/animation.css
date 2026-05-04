@@ -1,0 +1,75 @@
+@keyframes communityWinsUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+@keyframes communityWinsUpReverse {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+@keyframes scrollRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes heroVideoHang {
+  0% {
+    opacity: 1;
+    transform: translateY(-132px) rotate(-1.5deg);
+  }
+  32% {
+    opacity: 1;
+    transform: translateY(0) rotate(3.6deg);
+  }
+  48% {
+    transform: translateY(0) rotate(-2.4deg);
+  }
+  63% {
+    transform: translateY(0) rotate(1.35deg);
+  }
+  77% {
+    transform: translateY(0) rotate(-0.62deg);
+  }
+  89% {
+    transform: translateY(0) rotate(0.24deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+.hero-hanging-video {
+  animation: heroVideoHang 2200ms cubic-bezier(0.16, 0.86, 0.22, 1) 160ms both;
+  transform-origin: 50% 0;
+  will-change: transform, opacity;
+}
+.testimonial-scroller::-webkit-scrollbar {
+  display: none;
+}
+.cld-player-shell,
+.cld-player-shell .video-js,
+.cld-player-shell .cld-video-player {
+  height: 100%;
+  width: 100%;
+}
+.cld-player-shell .vjs-tech {
+  object-fit: cover;
+}
