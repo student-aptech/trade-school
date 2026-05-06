@@ -9,6 +9,9 @@ import { Partners } from "./components/section/Partners";
 import { Plans } from "./components/section/Plans";
 import { Testimonials } from "./components/section/Testimonials";
 import { Checkout } from "./pages/Checkout";
+// import { MyIntroduction } from "./components/section/MyIntroduction";
+// import { FAQs } from "./components/section/FAQs";
+// import { RiskDisclosure } from "./components/section/RiskDisclosure";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState("#overview");
@@ -30,9 +33,11 @@ export default function App() {
     window.addEventListener("scroll", handleScroll);
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [path]);
 
   useEffect(() => {
+    if (path === "/checkout") return;
+
     const revealItems = Array.from(
       document.querySelectorAll<HTMLElement>("[data-reveal]"),
     );
@@ -60,7 +65,7 @@ export default function App() {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [path]);
 
   useEffect(() => {
     const handleRouteChange = () => setPath(window.location.pathname);
@@ -95,9 +100,15 @@ export default function App() {
 
         <Testimonials />
 
+        <Plans />
+
+        {/* <MyIntroduction /> */}
+
         <Partners />
 
-        <Plans />
+        {/* <FAQs /> */}
+
+        {/* <RiskDisclosure /> */}
       </section>
     </>
   );

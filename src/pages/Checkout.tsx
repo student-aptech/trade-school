@@ -1,8 +1,9 @@
 import { useMemo, useRef, useState, type FormEvent } from "react";
 import { pricingPlans } from "../data/appData";
+import { Modal } from "../components/widget/Modal";
 
 // Update your WhatsApp number here. Use country code and no plus sign.
-const WHATSAPP_NUMBER = "03153206125";
+const WHATSAPP_NUMBER = "923153206125";
 
 // Replace this with your deployed Google Apps Script Web App URL.
 const GOOGLE_APPS_SCRIPT_URL =
@@ -27,15 +28,16 @@ const EASYPAISA_DETAILS = {
   number: "03123100014",
 };
 
-const paymentMethods = [
-  "Bank Transfer",
-  "JazzCash",
-  "Easypaisa",
-  "WhatsApp confirmation",
-];
+const paymentMethods = ["Bank Transfer", "JazzCash", "Easypaisa"];
 
 function formatPrice(price: number) {
   return `PKR ${price.toLocaleString()}`;
+}
+
+function createWhatsappUrl(message: string) {
+  return `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(
+    message,
+  )}`;
 }
 
 type PaymentProofPayload = {
@@ -84,6 +86,8 @@ export function Checkout() {
   const [selectedPlanName, setSelectedPlanName] = useState(initialPlan.name);
   const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [whatsappUrl, setWhatsappUrl] = useState("");
   const [submitError, setSubmitError] = useState("");
   const paymentScreenshotRef = useRef<HTMLInputElement>(null);
   const selectedPlan = useMemo(
@@ -93,9 +97,30 @@ export function Checkout() {
     [selectedPlanName],
   );
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+
+    window.location.href = "/";
+  };
+
+  const handleSuccessClose = () => {
+    setShowSuccessPopup(false);
+
+    if (!whatsappUrl) return;
+
+    window.location.href = whatsappUrl;
+    setWhatsappUrl("");
+  };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitError("");
+    setShowSuccessPopup(false);
+
+    const form = event.currentTarget;
 
     const paymentScreenshot = paymentScreenshotRef.current?.files?.[0];
     if (!paymentScreenshot) {
@@ -132,6 +157,8 @@ export function Checkout() {
       "Request: I have paid for this membership plan. Please verify my payment and share access.",
     ].join("\n");
 
+    const nextWhatsappUrl = createWhatsappUrl(message);
+
     try {
       setIsSubmitting(true);
       const paymentScreenshotBase64 = await readFileAsBase64(paymentScreenshot);
@@ -153,24 +180,21 @@ export function Checkout() {
         },
       };
 
+      form.reset();
+      setSelectedPlanName(initialPlan.name);
+      setPaymentMethod(paymentMethods[0]);
+      if (paymentScreenshotRef.current) {
+        paymentScreenshotRef.current.value = "";
+      }
+      setWhatsappUrl(nextWhatsappUrl);
+      setShowSuccessPopup(true);
+
       await fetch(GOOGLE_APPS_SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8",
-        },
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload),
       });
-
-      // if (!response.ok) {
-      //   throw new Error("Payment proof submission failed.");
-      // }
-
-      window.open(
-        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
-        "_blank",
-        "noopener,noreferrer",
-      );
     } catch (error) {
       setSubmitError(
         error instanceof Error
@@ -181,31 +205,41 @@ export function Checkout() {
       setIsSubmitting(false);
     }
   };
-
   return (
     <main className="min-h-screen bg-white px-5 py-10 text-[#080808] sm:py-14 lg:px-8">
       <div className="mx-auto grid w-full max-w-[1480px] items-stretch gap-6 lg:grid-cols-[1.1fr_0.9fr_1fr] lg:gap-6">
+        <div className="lg:col-span-3">
+          <button
+            type="button"
+            onClick={handleBack}
+            className="checkout-small-heading inline-flex items-center gap-2 rounded-full border border-[#080808]/10 bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-[#080808] shadow-sm transition hover:border-[#0899b8]/35 hover:text-[#0899b8]"
+          >
+            <span aria-hidden="true">&larr;</span>
+            Back
+          </button>
+        </div>
+
         <div className="h-full rounded-[20px] border border-[#0899b8]/14 bg-white p-5 shadow-sm">
           <div className="mb-5 border-b border-[#080808]/8 pb-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0899b8]">
+            <p className="checkout-small-heading text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0899b8]">
               Checkout
             </p>
-            <h1 className="mt-1 text-2xl font-black leading-none tracking-[-0.04em]">
+            <h1 className="checkout-small-heading mt-1 text-2xl font-black leading-none tracking-[-0.04em]">
               Complete your membership
             </h1>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#080808]/46">
+              <p className="checkout-small-heading text-xs font-bold uppercase tracking-[0.16em] text-[#080808]/46">
                 Selected plan
               </p>
-              <h2 className="mt-2 text-3xl font-black tracking-[-0.04em]">
+              <h2 className="checkout-small-heading mt-2 text-3xl font-black tracking-[-0.04em]">
                 {selectedPlan.name}
               </h2>
             </div>
             <div className="rounded-[14px] bg-[#080808] px-4 py-3 text-white">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#cfcfcf]">
+              <p className="checkout-small-heading text-xs font-semibold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 Price
               </p>
               <p className="mt-1 text-2xl font-black text-[#0899b8]">
@@ -216,13 +250,13 @@ export function Checkout() {
 
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             <div className="rounded-[16px] border border-[#080808]/8 p-4">
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#080808]/46">
+              <p className="checkout-small-heading text-xs font-bold uppercase tracking-[0.14em] text-[#080808]/46">
                 Duration
               </p>
               <p className="mt-2 font-semibold">{selectedPlan.duration}</p>
             </div>
             <div className="rounded-[16px] border border-[#080808]/8 p-4">
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#080808]/46">
+              <p className="checkout-small-heading text-xs font-bold uppercase tracking-[0.14em] text-[#080808]/46">
                 Discount
               </p>
               <p className="mt-2 font-semibold">{selectedPlan.discountText}</p>
@@ -231,7 +265,7 @@ export function Checkout() {
 
           <div className="mt-5 grid gap-5 md:grid-cols-2">
             <div>
-              <h3 className="text-sm font-black uppercase tracking-[0.12em]">
+              <h3 className="checkout-small-heading text-sm font-black uppercase tracking-[0.12em]">
                 Courses included
               </h3>
               <ul className="mt-3 space-y-2 text-sm leading-6 text-[#080808]/68">
@@ -241,7 +275,7 @@ export function Checkout() {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-black uppercase tracking-[0.12em]">
+              <h3 className="checkout-small-heading text-sm font-black uppercase tracking-[0.12em]">
                 Services included
               </h3>
               <ul className="mt-3 space-y-2 text-sm leading-6 text-[#080808]/68">
@@ -253,7 +287,7 @@ export function Checkout() {
           </div>
 
           <div className="mt-5 rounded-[16px] bg-[#eefbfe] p-4">
-            <h3 className="text-sm font-black uppercase tracking-[0.12em]">
+            <h3 className="checkout-small-heading text-sm font-black uppercase tracking-[0.12em]">
               Payment instructions
             </h3>
             <ul className="mt-3 space-y-2 text-sm leading-6 text-[#080808]/68">
@@ -265,7 +299,7 @@ export function Checkout() {
         </div>
 
         <div className="h-full rounded-[18px] border border-[#080808]/10 bg-white p-5 shadow-sm">
-          <h3 className="text-xl font-black uppercase tracking-[0.12em] text-[#080808]">
+          <h3 className="checkout-small-heading text-xl font-black uppercase tracking-[0.12em] text-[#080808]">
             Payment methods
           </h3>
           <p className="mt-1 text-xs leading-5 text-[#080808]/56">
@@ -274,7 +308,9 @@ export function Checkout() {
 
           <div className="mt-4 divide-y divide-[#080808]/8 rounded-[14px] border border-[#080808]/10">
             <div className="p-4">
-              <p className="text-sm font-black text-[#080808]">Bank Transfer</p>
+              <p className="checkout-small-heading text-sm font-black text-[#080808]">
+                Bank Transfer
+              </p>
               <div className="mt-3 grid gap-2 text-sm text-[#080808]/72">
                 <p className="flex items-start justify-between gap-4">
                   <span className="text-[#080808]/48">Title</span>
@@ -304,7 +340,9 @@ export function Checkout() {
             </div>
 
             <div className="p-4">
-              <p className="text-sm font-black text-[#080808]">JazzCash</p>
+              <p className="checkout-small-heading text-sm font-black text-[#080808]">
+                JazzCash
+              </p>
               <div className="mt-3 grid gap-2 text-sm text-[#080808]/72">
                 <p className="flex items-start justify-between gap-4">
                   <span className="text-[#080808]/48">Title</span>
@@ -322,7 +360,9 @@ export function Checkout() {
             </div>
 
             <div className="p-4">
-              <p className="text-sm font-black text-[#080808]">Easypaisa</p>
+              <p className="checkout-small-heading text-sm font-black text-[#080808]">
+                Easypaisa
+              </p>
               <div className="mt-3 grid gap-2 text-sm text-[#080808]/72">
                 <p className="flex items-start justify-between gap-4">
                   <span className="text-[#080808]/48">Title</span>
@@ -340,7 +380,7 @@ export function Checkout() {
             </div>
 
             <div className="p-4">
-              <p className="text-sm font-black text-[#080808]">
+              <p className="checkout-small-heading text-sm font-black text-[#080808]">
                 WhatsApp confirmation
               </p>
               <p className="mt-2 text-sm leading-5 text-[#080808]/60">
@@ -351,7 +391,7 @@ export function Checkout() {
         </div>
 
         <section className="h-full rounded-[18px] border border-[#0899b8]/16 bg-[#080808] p-4 text-white shadow-[0_24px_80px_rgba(0,0,0,0.24)]">
-          <h2 className="text-xl font-black tracking-[-0.03em]">
+          <h2 className="checkout-small-heading text-xl font-black tracking-[-0.03em]">
             Customer details
           </h2>
           <p className="mt-1 text-xs leading-5 text-[#cfcfcf]">
@@ -360,7 +400,7 @@ export function Checkout() {
 
           <form className="mt-4 space-y-2" onSubmit={handleSubmit}>
             <label className="block">
-              <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
+              <span className="checkout-small-heading text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 Full Name
               </span>
               <input
@@ -371,7 +411,7 @@ export function Checkout() {
             </label>
 
             <label className="block">
-              <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
+              <span className="checkout-small-heading text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 Email
               </span>
               <input
@@ -383,7 +423,7 @@ export function Checkout() {
             </label>
 
             <label className="block">
-              <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
+              <span className="checkout-small-heading text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 WhatsApp Number
               </span>
               <input
@@ -394,7 +434,7 @@ export function Checkout() {
             </label>
 
             <label className="block">
-              <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
+              <span className="checkout-small-heading text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 Selected Plan
               </span>
               <select
@@ -413,7 +453,7 @@ export function Checkout() {
             </label>
 
             <label className="block">
-              <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
+              <span className="checkout-small-heading text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 Payment Method
               </span>
               <select
@@ -432,7 +472,7 @@ export function Checkout() {
             </label>
 
             <label className="block">
-              <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
+              <span className="checkout-small-heading text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 Transaction ID
               </span>
               <input
@@ -443,7 +483,7 @@ export function Checkout() {
             </label>
 
             <label className="block">
-              <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
+              <span className="checkout-small-heading text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 Payment Screenshot
               </span>
               <input
@@ -470,7 +510,7 @@ export function Checkout() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="motion-shine inline-flex w-full items-center justify-center rounded-full bg-[#0899b8] px-4 py-2 text-xs font-black uppercase tracking-[0.08em] text-[#080808] transition hover:bg-[#13b2d1] disabled:cursor-not-allowed disabled:opacity-70"
+              className="checkout-small-heading motion-shine inline-flex w-full items-center justify-center rounded-full bg-[#0899b8] px-4 py-2 text-xs font-black uppercase tracking-[0.08em] text-[#080808] transition hover:bg-[#13b2d1] disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isSubmitting
                 ? "Submitting..."
@@ -479,6 +519,11 @@ export function Checkout() {
           </form>
         </section>
       </div>
+
+      <Modal
+        isOpen={showSuccessPopup}
+        onClose={handleSuccessClose}
+      />
     </main>
   );
 }

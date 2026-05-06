@@ -36,7 +36,7 @@ export function CloudinaryVideoPlayer({
         autoplay: autoPlay,
         controls: true,
         fluid: true,
-        muted: autoPlay,
+        muted: false,
         sourceTypes: ["auto"],
       });
     }
@@ -47,7 +47,6 @@ export function CloudinaryVideoPlayer({
     });
 
     if (autoPlay) {
-      playerRef.current.mute();
       playerRef.current.play();
     }
   }, [autoPlay, playerId, poster, source]);
@@ -68,7 +67,7 @@ export function CloudinaryVideoPlayer({
         className="cld-video-player cld-fluid"
         autoPlay={autoPlay}
         controls
-        muted={autoPlay}
+        muted={false}
         playsInline
         poster={poster}
         aria-label={title}

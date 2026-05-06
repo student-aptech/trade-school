@@ -45,7 +45,7 @@ export function Plans() {
         </p>
       </div>
 
-      <div className="relative z-10 mt-20 mx-auto grid w-full gap-6 md:max-w-[560px] lg:max-w-none lg:grid-cols-3">
+      <div className="relative z-10 mt-20 mx-auto grid w-full gap-6 md:max-w-[560px] lg:max-w-[1180px] lg:grid-cols-3">
         {pricingPlans.map((plan) => (
           <div
             key={plan.name}
