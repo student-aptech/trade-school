@@ -75,7 +75,9 @@ export function BenefitCards() {
                     </h3>
                     <p
                       className={`mt-4 max-w-[340px] text-[13px] leading-5 sm:text-[13px] sm:leading-5 md:mt-4 md:text-[13px] md:leading-5 lg:text-[13px] lg:leading-5 ${
-                        card.highlight ? "text-[#080808]/62" : "text-[#080808]/58"
+                        card.highlight
+                          ? "text-[#080808]/62"
+                          : "text-[#080808]/58"
                       }`}
                     >
                       {card.text}
@@ -88,7 +90,7 @@ export function BenefitCards() {
 
           <div
             data-reveal
-            className="relative z-10 mx-auto mt-14 grid w-full gap-8 overflow-hidden bg-white py-0 text-[#080808] lg:grid-cols-[0.76fr_1.24fr] lg:gap-12"
+            className="relative z-10 mx-auto mt-24 grid w-full gap-8 overflow-hidden bg-white py-0 text-[#080808] lg:grid-cols-[0.76fr_1.24fr] lg:gap-12"
           >
             <div className="relative z-10 flex flex-col justify-center">
               <h2 className="section-display-heading max-w-[430px] text-[54px] leading-[0.88] tracking-[-0.045em] text-[#080808] sm:text-[72px] lg:text-[80px]">

@@ -6,6 +6,12 @@ import type { Currency, PricingPlan } from "../../types";
 export function Plans() {
   const [currency, setCurrency] = useState<Currency>("pkr");
 
+  const goToCheckout = (planName: string) => {
+    const checkoutPath = `/checkout?plan=${encodeURIComponent(planName)}`;
+    window.history.pushState({}, "", checkoutPath);
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  };
+
   const formatPrice = (plan: PricingPlan) => {
     const amount = plan.price[currency];
     return currency === "pkr"
@@ -137,6 +143,7 @@ export function Plans() {
             </div>
 
             <button
+              onClick={() => goToCheckout(plan.name)}
               className={`motion-shine mt-5 inline-flex w-full items-center justify-center rounded-full px-4 py-3 text-[14px] font-semibold transition ${
                 plan.highlighted
                   ? "bg-[#0899b8] text-[#080808] shadow-[0_16px_34px_rgba(8,153,184,0.28)] hover:bg-[#13b2d1]"

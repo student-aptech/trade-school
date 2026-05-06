@@ -8,9 +8,11 @@ import { Hero } from "./components/section/hero";
 import { Partners } from "./components/section/Partners";
 import { Plans } from "./components/section/Plans";
 import { Testimonials } from "./components/section/Testimonials";
+import { Checkout } from "./pages/Checkout";
 
-export default function TradingHeroSection() {
+export default function App() {
   const [activeSection, setActiveSection] = useState("#overview");
+  const [path, setPath] = useState(window.location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,6 +62,17 @@ export default function TradingHeroSection() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const handleRouteChange = () => setPath(window.location.pathname);
+
+    window.addEventListener("popstate", handleRouteChange);
+    return () => window.removeEventListener("popstate", handleRouteChange);
+  }, []);
+
+  if (path === "/checkout") {
+    return <Checkout />;
+  }
+
   return (
     <>
       <section
@@ -71,6 +84,7 @@ export default function TradingHeroSection() {
         }}
       >
         <Navbar activeSection={activeSection} />
+
         <Hero />
 
         <BenefitCards />

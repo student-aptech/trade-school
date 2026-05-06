@@ -43,10 +43,18 @@ export function Navbar({ activeSection }: NavbarProps) {
           ))}
         </nav>
 
-        <button className="motion-shine inline-flex h-10 min-w-[142px] shrink-0 items-center justify-center gap-2 justify-self-end rounded-full bg-[#0899b8] px-6 text-sm font-semibold text-[#080808] transition hover:bg-[#0899b8]">
+        <a
+          href="/checkout"
+          onClick={(event) => {
+            event.preventDefault();
+            window.history.pushState({}, "", "/checkout");
+            window.dispatchEvent(new PopStateEvent("popstate"));
+          }}
+          className="motion-shine inline-flex h-10 min-w-[142px] shrink-0 items-center justify-center gap-2 justify-self-end rounded-full bg-[#0899b8] px-6 text-sm font-semibold text-[#080808] transition hover:bg-[#0899b8]"
+        >
           Enroll Now
           <ArrowRight className="h-4 w-4" />
-        </button>
+        </a>
       </div>
     </div>
   );

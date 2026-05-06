@@ -11,7 +11,11 @@ export type PricingPlan = {
   price: { usd: number; pkr: number };
   originalPrice?: { usd: number; pkr: number };
   periodLabel: string;
+  duration: string;
   description: string;
+  courses: string[];
+  services: string[];
+  paymentInstructions: string[];
   features: string[];
   discountText: string;
   cta: string;

@@ -84,49 +84,49 @@ export const tradingPartners: TradingPartner[] = [
   {
     name: "Exness",
     mark: "EX",
-    logo: "/exness-logo.png",
+    logo: "/logos/exness-logo.png",
     description: "Global multi-asset broker for active traders.",
   },
   {
     name: "IC Market",
     mark: "IC",
-    logo: "/ic-market.png",
+    logo: "/logos/ic-market.png",
     description: "Forex, indices, commodities, and CFD market access.",
   },
   {
     name: "Ripster",
     mark: "RP",
-    logo: "/Ripster-logo.jpg",
+    logo: "/logos/Ripster-logo.jpg",
     description: "Market education, trend tools, and trading insights.",
   },
   {
     name: "PMEX",
     mark: "PX",
-    logo: "/pmex-logo.svg",
+    logo: "/logos/pmex-logo.svg",
     description: "Pakistan Mercantile Exchange market access.",
   },
   {
     name: "Munir Khanani",
     mark: "MK",
-    logo: "/logo_munirkhanani.png",
+    logo: "/logos/logo_munirkhanani.png",
     description: "Pakistan market brokerage and trading services.",
   },
   {
     name: "Market Watch",
     mark: "MW",
-    logo: "/market-watch.png",
+    logo: "/logos/market-watch.png",
     description: "Financial news, data, and market insights.",
   },
   {
     name: "Tenet Group",
     mark: "TG",
-    logo: "/tenet-trade.jpg",
+    logo: "/logos/tenet-trade.jpg",
     description: "Earnings calendar, expectations, and market reactions.",
   },
   {
     name: "Interective Brocker",
     mark: "IB",
-    logo: "/interective-brocker.png",
+    logo: "/logos/interective-brocker.png",
     description: "Breaking market news, analysis, and trading ideas.",
   },
 ];
@@ -134,12 +134,28 @@ export const tradingPartners: TradingPartner[] = [
 export const pricingPlans: PricingPlan[] = [
   {
     name: "Starter",
+    // Update plan prices here.
     price: { usd: 40, pkr: 11000 },
     periodLabel: "month",
+    duration: "1 month",
     description:
       "A focused one month access plan for traders who want to start learning with community support and live market context.",
+    // Update courses included in this plan here.
+    courses: ["Pakistan Stocks", "Forex Trading"],
+    // Update services included in this plan here.
+    services: [
+      "Private Discord community access",
+      "Setup based trade callouts",
+      "Weekly live value sessions",
+      "Market updates",
+    ],
+    paymentInstructions: [
+      "Pay the Starter plan amount using any listed payment method.",
+      "Keep your transaction receipt or screenshot ready.",
+      "Submit your details on WhatsApp for manual verification.",
+    ],
     features: [
-      "Access to Pakistan, US Stocks, and Forex Trading Courses for 1 month",
+      "Access to Pakistan Stocks, and Forex Trading Courses for 1 month",
       "Private Trading Community Access - Discord",
       "Proven Trade System and Setups - trade callouts setup based",
       "Weekly Live Sessions for value addition",
@@ -151,11 +167,34 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Elite Mentorship",
+    // Update plan prices here.
     price: { usd: 250, pkr: 68750 },
     originalPrice: { usd: 480, pkr: 132000 },
     periodLabel: "year",
+    duration: "12 months",
     description:
       "The complete premium bundle with lifetime course access, future course enrollment, and a full year of community access.",
+    // Update courses included in this plan here.
+    courses: [
+      "VSA - Volume Spread Analysis",
+      "Pakistan Stocks",
+      "US Stocks",
+      "Forex Trading",
+      "Future courses including Fundamental Analysis and Financial Analysis with AI",
+    ],
+    // Update services included in this plan here.
+    services: [
+      "12 months private Discord community access",
+      "Premium weekly live sessions",
+      "Setup based trade callouts",
+      "Market updates",
+      "Future course enrollment",
+    ],
+    paymentInstructions: [
+      "Pay the Elite Mentorship amount using any listed payment method.",
+      "Keep your transaction receipt or screenshot ready.",
+      "Submit your details on WhatsApp for manual verification.",
+    ],
     features: [
       "Complete Course Bundle: VSA - Volume Spread Analysis, Pakistan Stocks, US Stocks, and Forex - Lifetime Access",
       "12 months Private Trading Community Access - Discord",
@@ -170,13 +209,29 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Pro Trader",
+    // Update plan prices here.
     price: { usd: 96, pkr: 26400 },
     originalPrice: { usd: 120, pkr: 33000 },
     periodLabel: "quarter",
+    duration: "3 months",
     description:
       "The best value for serious learners who want lifetime course access and a longer community runway.",
+    // Update courses included in this plan here.
+    courses: ["Pakistan Stocks", "Forex Trading"],
+    // Update services included in this plan here.
+    services: [
+      "3 months private Discord community access",
+      "Setup based trade callouts",
+      "Weekly live sessions",
+      "Market updates",
+    ],
+    paymentInstructions: [
+      "Pay the Pro Trader amount using any listed payment method.",
+      "Keep your transaction receipt or screenshot ready.",
+      "Submit your details on WhatsApp for manual verification.",
+    ],
     features: [
-      "Lifetime Access to Pakistan, US Stocks, and Forex Courses",
+      "Lifetime Access to Pakistan Stocks, and Forex Courses",
       "3 months Private Trading Community Access - Discord",
       "Proven Trade System and Setups - trade callouts setup based",
       "Weekly Live Sessions",
