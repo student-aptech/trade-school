@@ -6,6 +6,11 @@ export type HeroBenefitCard = {
   highlight: boolean;
 };
 
+export type FAQItem = {
+  question: string;
+  answer: string;
+};
+
 export type PricingPlan = {
   name: string;
   price: { usd: number; pkr: number };

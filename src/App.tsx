@@ -10,7 +10,7 @@ import { Plans } from "./components/section/Plans";
 import { Testimonials } from "./components/section/Testimonials";
 import { Checkout } from "./pages/Checkout";
 // import { MyIntroduction } from "./components/section/MyIntroduction";
-// import { FAQs } from "./components/section/FAQs";
+import { FAQs } from "./components/section/FAQs";
 // import { RiskDisclosure } from "./components/section/RiskDisclosure";
 
 export default function App() {
@@ -106,7 +106,7 @@ export default function App() {
 
         <Partners />
 
-        {/* <FAQs /> */}
+        <FAQs />
 
         {/* <RiskDisclosure /> */}
       </section>

@@ -28,7 +28,12 @@ const EASYPAISA_DETAILS = {
   number: "03123100014",
 };
 
-const paymentMethods = ["Bank Transfer", "JazzCash", "Easypaisa"];
+const BINANCE_DETAILS = {
+  accountTitle: "The Trade School",
+  binanceId: "88384923",
+};
+
+const paymentMethods = ["Bank Transfer", "JazzCash", "Easypaisa", "Binance"];
 
 function formatPrice(price: number) {
   return `PKR ${price.toLocaleString()}`;
@@ -38,6 +43,14 @@ function createWhatsappUrl(message: string) {
   return `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(
     message,
   )}`;
+}
+
+function RequiredMark() {
+  return <span className="text-red-400"> *</span>;
+}
+
+function removeNumbersFromInput(event: FormEvent<HTMLInputElement>) {
+  event.currentTarget.value = event.currentTarget.value.replace(/[0-9]/g, "");
 }
 
 type PaymentProofPayload = {
@@ -111,7 +124,7 @@ export function Checkout() {
 
     if (!whatsappUrl) return;
 
-    window.location.href = whatsappUrl;
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
     setWhatsappUrl("");
   };
 
@@ -141,6 +154,11 @@ export function Checkout() {
       formData.get("transactionId") || "Not provided",
     ).trim();
     const planPrice = formatPrice(selectedPlan.price.pkr);
+
+    if (/\d/.test(fullName)) {
+      setSubmitError("Full name cannot contain numbers.");
+      return;
+    }
 
     const message = [
       "Payment Proof Submission",
@@ -180,6 +198,13 @@ export function Checkout() {
         },
       };
 
+      await fetch(GOOGLE_APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload),
+      });
+
       form.reset();
       setSelectedPlanName(initialPlan.name);
       setPaymentMethod(paymentMethods[0]);
@@ -188,13 +213,6 @@ export function Checkout() {
       }
       setWhatsappUrl(nextWhatsappUrl);
       setShowSuccessPopup(true);
-
-      await fetch(GOOGLE_APPS_SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload),
-      });
     } catch (error) {
       setSubmitError(
         error instanceof Error
@@ -259,7 +277,9 @@ export function Checkout() {
               <p className="checkout-small-heading text-xs font-bold uppercase tracking-[0.14em] text-[#080808]/46">
                 Discount
               </p>
-              <p className="mt-2 font-semibold">{selectedPlan.discountText}</p>
+              <p className="mt-2 text-[#ff0000db] font-semibold">
+                {selectedPlan.discountText}
+              </p>
             </div>
           </div>
 
@@ -381,11 +401,22 @@ export function Checkout() {
 
             <div className="p-4">
               <p className="checkout-small-heading text-sm font-black text-[#080808]">
-                WhatsApp confirmation
+                Binance
               </p>
-              <p className="mt-2 text-sm leading-5 text-[#080808]/60">
-                Submit your payment proof on WhatsApp after payment.
-              </p>
+              <div className="mt-3 grid gap-2 text-sm text-[#080808]/72">
+                <p className="flex items-start justify-between gap-4">
+                  <span className="text-[#080808]/48">Title</span>
+                  <span className="text-right font-semibold text-[#080808]">
+                    {BINANCE_DETAILS.accountTitle}
+                  </span>
+                </p>
+                <p className="flex items-start justify-between gap-4">
+                  <span className="text-[#080808]/48">Binance ID</span>
+                  <span className="text-right font-semibold text-[#080808]">
+                    {BINANCE_DETAILS.binanceId}
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -402,10 +433,13 @@ export function Checkout() {
             <label className="block">
               <span className="checkout-small-heading text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 Full Name
+                <RequiredMark />
               </span>
               <input
+                type="text"
                 required
                 name="fullName"
+                onInput={removeNumbersFromInput}
                 className="mt-1 h-8 w-full rounded-[9px] border border-white/10 bg-white px-3 text-sm text-[#080808] outline-none focus:border-[#0899b8]"
               />
             </label>
@@ -413,6 +447,7 @@ export function Checkout() {
             <label className="block">
               <span className="checkout-small-heading text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 Email
+                <RequiredMark />
               </span>
               <input
                 required
@@ -425,9 +460,11 @@ export function Checkout() {
             <label className="block">
               <span className="checkout-small-heading text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 WhatsApp Number
+                <RequiredMark />
               </span>
               <input
                 required
+                type="number"
                 name="whatsappNumber"
                 className="mt-1 h-8 w-full rounded-[9px] border border-white/10 bg-white px-3 text-sm text-[#080808] outline-none focus:border-[#0899b8]"
               />
@@ -436,6 +473,7 @@ export function Checkout() {
             <label className="block">
               <span className="checkout-small-heading text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 Selected Plan
+                <RequiredMark />
               </span>
               <select
                 required
@@ -455,6 +493,7 @@ export function Checkout() {
             <label className="block">
               <span className="checkout-small-heading text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 Payment Method
+                <RequiredMark />
               </span>
               <select
                 required
@@ -485,6 +524,7 @@ export function Checkout() {
             <label className="block">
               <span className="checkout-small-heading text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 Payment Screenshot
+                <RequiredMark />
               </span>
               <input
                 required
@@ -520,10 +560,7 @@ export function Checkout() {
         </section>
       </div>
 
-      <Modal
-        isOpen={showSuccessPopup}
-        onClose={handleSuccessClose}
-      />
+      <Modal isOpen={showSuccessPopup} onClose={handleSuccessClose} />
     </main>
   );
 }

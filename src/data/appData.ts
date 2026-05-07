@@ -1,4 +1,5 @@
 import type {
+  FAQItem,
   HeroBenefitCard,
   PricingPlan,
   TestimonialPost,
@@ -20,6 +21,59 @@ export const navItems = [
   { label: "Community Wins", href: "#community-wins" },
   { label: "Testimonials", href: "#testimonials" },
   { label: "Pricing", href: "#pricing" },
+];
+
+export const faqs: FAQItem[] = [
+  {
+    question: "Is this suitable for beginners?",
+    answer:
+      "Yes. The lessons start with foundations and then move into practical chart reading, setups, and risk management.",
+  },
+  {
+    question: "How is access shared after payment?",
+    answer:
+      "After you submit payment proof, our team manually verifies the details and shares access through your WhatsApp contact.",
+  },
+  {
+    question: "Do you provide trade signals?",
+    answer:
+      "The community includes setup based trade callouts and market updates, but every learner is encouraged to understand risk before taking any trade.",
+  },
+  {
+    question: "Can I switch plans later?",
+    answer:
+      "Yes. You can contact support on WhatsApp if you want to upgrade your plan after joining.",
+  },
+  {
+    question: "Can I switch plans later?",
+    answer:
+      "Yes. You can contact support on WhatsApp if you want to upgrade your plan after joining.",
+  },
+  {
+    question: "Can I switch plans later?",
+    answer:
+      "Yes. You can contact support on WhatsApp if you want to upgrade your plan after joining.",
+  },
+  {
+    question: "Which markets are covered in the courses?",
+    answer:
+      "The plans cover markets such as Pakistan Stocks, Forex Trading, US Stocks, and VSA depending on the membership you select.",
+  },
+  {
+    question: "Is community access included?",
+    answer:
+      "Yes. Each plan includes private Discord community access for the duration listed on the selected membership plan.",
+  },
+  {
+    question: "Are live sessions included?",
+    answer:
+      "Yes. Members get weekly live sessions where market context, trade ideas, and learning topics are discussed.",
+  },
+  {
+    question: "What payment methods can I use?",
+    answer:
+      "You can pay through Bank Transfer, JazzCash, Easypaisa, or Binance, then upload your payment screenshot on checkout.",
+  },
 ];
 
 export const heroBenefitCards: HeroBenefitCard[] = [
