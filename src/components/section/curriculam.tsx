@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PlayCircle } from "lucide-react";
 import { curriculumModules } from "../../data/appData";
 
@@ -10,14 +10,33 @@ const curriculumStats = [
 
 export function Curriculam() {
   const [openModule, setOpenModule] = useState(0);
+  const [curriculumInView, setCurriculumInView] = useState(false);
+  const curriculumRef = useRef<HTMLDivElement | null>(null);
   const activeModule = curriculumModules[openModule];
   const progress = ((openModule + 1) / curriculumModules.length) * 100;
+  const revealClass = curriculumInView ? "is-visible" : "";
+
+  useEffect(() => {
+    const target = curriculumRef.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setCurriculumInView(true);
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.14 },
+    );
+
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div
       id="curriculum"
+      ref={curriculumRef}
       data-reveal
-      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen scroll-mt-28 overflow-hidden border-y border-[#080808]/10 bg-white px-5 py-16 text-[#080808] before:pointer-events-none before:absolute before:inset-0 before:bg-[linear-gradient(135deg,rgba(8,8,8,0.06)_0_1px,transparent_1px_18px)] lg:px-8 lg:py-24"
+      className={`relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen scroll-mt-28 overflow-hidden border-y border-[#080808]/10 bg-white px-5 py-16 text-[#080808] before:pointer-events-none before:absolute before:inset-0 before:bg-[linear-gradient(135deg,rgba(8,8,8,0.06)_0_1px,transparent_1px_18px)] lg:px-8 lg:py-24 ${revealClass}`}
     >
       <div className="relative z-10 mx-auto max-w-[1240px]">
         <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end lg:gap-10">
@@ -43,7 +62,7 @@ export function Curriculam() {
                 <div
                   key={label}
                   data-reveal
-                  className="motion-lift rounded-[18px] border border-[#080808]/10 bg-white p-4 shadow-sm"
+                  className={`motion-lift rounded-[18px] border border-[#080808]/10 bg-white p-4 shadow-sm ${revealClass}`}
                 >
                   <p className="text-3xl font-black leading-none text-[#0899b8]">
                     {value}
@@ -58,7 +77,7 @@ export function Curriculam() {
 
           <div
             data-reveal
-            className="relative overflow-hidden rounded-[34px] border border-[#0899b8]/20 bg-[#080808] p-4 shadow-[0_28px_90px_rgba(0,0,0,0.28)]"
+            className={`relative overflow-hidden rounded-[34px] border border-[#0899b8]/20 bg-[#080808] p-4 shadow-[0_28px_90px_rgba(0,0,0,0.28)] ${revealClass}`}
           >
             <div className="grid gap-4 lg:grid-cols-[0.95fr_1.05fr]">
               <div className="relative min-h-[360px] overflow-hidden rounded-[26px] bg-black">
@@ -130,7 +149,7 @@ export function Curriculam() {
                       isOpen
                         ? "border-[#0899b8] bg-[#0899b8] text-[#080808]"
                         : "border-[#0899b8]/10 bg-[#080808] text-[#ffffff] hover:border-[#0899b8]/45"
-                    }`}
+                    } ${revealClass}`}
                   >
                     <span
                       className={`flex h-9 w-9 items-center justify-center rounded-full text-xs font-black ${

@@ -62,10 +62,20 @@ const legalLinks = [
   { label: "Legal Disclaimer", href: "/legal-disclaimer" },
   {
     label: "Privacy Policy",
-    href: "https://thetradeschool.info/privacy-policy-2/",
+    href: "https://thetradeschool.info/privacy-policy/",
   },
-  { label: "Return and Refund", href: "/return-and-refund" },
-  { label: "Terms and Conditions", href: "/terms-and-conditions" },
+  {
+    label: "Return and Refund",
+    href: "https://thetradeschool.info/refund-return/",
+  },
+  {
+    label: "Terms and Conditions",
+    href: "https://thetradeschool.info/term-conditions/",
+  },
+  {
+    label: "Legal Disclaimer",
+    href: "https://thetradeschool.info/legal-disclaimer/",
+  },
 ];
 
 const contactLinks = [

@@ -69,8 +69,8 @@ export function BenefitCards() {
                   }`}
                   style={{ transitionDelay: `${index * 110}ms` }}
                 >
-                  <div className="relative z-10 flex h-full flex-col justify-end">
-                    <h3 className="max-w-[260px] text-[22px] font-black leading-[1.02] tracking-normal sm:text-[22px] md:text-[22px] lg:text-[24px]">
+                  <div className="relative z-10 flex h-full flex-col justify-evenly">
+                    <h3 className="max-w-[260px] text-center text-[18px] font-black leading-[1.1] tracking-normal sm:text-[18px] md:text-[19px] lg:text-[20px]">
                       {card.title}
                     </h3>
                     <p

@@ -83,7 +83,7 @@ export const heroBenefitCards: HeroBenefitCard[] = [
     highlight: false,
   },
   {
-    title: "Real-time Trade Callouts",
+    title: "Get Real-time Trade Callouts",
     text: "Receive instant trade alerts and actionable insights during live market hours, helping you stay on top of every opportunity.",
     highlight: true,
   },
