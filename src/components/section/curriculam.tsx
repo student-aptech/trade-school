@@ -31,9 +31,11 @@ export function Curriculam() {
               <span className="text-[#0899b8]">roadmap</span>
             </h2>
             <p className="mt-5 max-w-[560px] text-base leading-8 text-[#080808]/62">
-              A premium pathway from market basics to confident execution, built
-              around structure, repetition, review, and risk-first decision
-              making.
+              Transform your trading journey with structured lessons and expert
+              guidance. Our premium course roadmap is designed to take you from
+              market basics to advanced trading strategies. Learn at your own
+              pace with lifetime access, and get ready to execute profitable
+              trades with confidence.
             </p>
 
             <div className="mt-8 grid max-w-[520px] grid-cols-3 gap-3">

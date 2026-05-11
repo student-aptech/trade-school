@@ -3,16 +3,16 @@ import { ArrowRight, PlayCircle } from "lucide-react";
 import { CloudinaryVideoPlayer } from "../CloudinaryVideoPlayer";
 
 const heroVideo = {
-  title: "Trade School Preview",
+  title: "Welcome Members",
   source: "2026-04-30_12-06-25_a601z7",
   poster:
     "https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?auto=format&fit=crop&w=1200&q=80",
 };
 
 const heroStats = [
-  ["98%", "Satisfaction"],
-  ["12K+", "Videos made"],
-  ["314", "Brands served"],
+  ["80%+", "Success Rate"],
+  ["7+", "Trading Experience"],
+  ["3400+", "International Clients"],
 ];
 
 export function Hero() {
@@ -32,13 +32,13 @@ export function Hero() {
             </div>
 
             <h1
-              className="hero-display-heading motion-rise max-w-[560px] text-[58px] uppercase leading-[0.86] tracking-[-0.055em] text-[#080808] sm:text-[88px] lg:text-[78px] xl:text-[88px]"
+              className="hero-display-heading motion-rise max-w-[560px] text-[46px] uppercase leading-[0.94] tracking-[-0.035em] text-[#080808] sm:text-[68px] lg:text-[64px] xl:text-[72px]"
               style={{ "--motion-delay": "120ms" } as CSSProperties}
             >
-              Content
-              <span className="block text-[#0899b8]">that</span>
+              Master VSA,
+              <span className="block text-[#0899b8]">Trade with</span>
               <span className="block text-[#080808] mix-blend-difference">
-                converts
+                Confidence.
               </span>
             </h1>
 
@@ -46,8 +46,9 @@ export function Hero() {
               className="motion-rise relative z-20 mt-8 max-w-[365px] text-[15px] font-medium leading-6 text-[#080808]"
               style={{ "--motion-delay": "220ms" } as CSSProperties}
             >
-              Unlock your brand's potential with our social media strategies,
-              from website audits to ready-to-post content that converts.
+              Master VSA & Ripster's EMA Setup with a fixed, repeatable trading
+              system. Start your journey today join our discord community and
+              unlock expert trading stratigies.
             </p>
 
             <div
@@ -58,13 +59,13 @@ export function Hero() {
                 href="#pricing"
                 className="motion-shine inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#0899b8] px-7 text-[14px] font-semibold text-[#080808] transition hover:bg-[#0899b8]"
               >
-                Start for free <ArrowRight className="h-4 w-4" />
+                Start Trading Now <ArrowRight className="h-4 w-4" />
               </a>
               <a
                 href="#testimonials"
                 className="motion-lift inline-flex h-11 items-center justify-center rounded-full border border-[#080808]/18 bg-white px-6 text-[14px] font-semibold text-[#080808] shadow-sm transition hover:border-[#0899b8] hover:text-[#0899b8]"
               >
-                See our work
+                Trade Recaps
               </a>
             </div>
 
@@ -77,9 +78,7 @@ export function Hero() {
                   <p className="text-[30px] font-black leading-none tracking-wide text-[#080808]">
                     {value}
                   </p>
-                  <p className="mt-2 text-[14px] text-[#080808]/58">
-                    {label}
-                  </p>
+                  <p className="mt-2 text-[14px] text-[#080808]/58">{label}</p>
                 </div>
               ))}
             </div>
@@ -96,7 +95,7 @@ export function Hero() {
               <div className="flex flex-col gap-3 border-b border-[#0899b8]/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#0899b8]">
-                    Featured video
+                    The Trade School
                   </p>
                   <h2 className="mt-1 text-lg font-semibold text-[#ffffff]">
                     {heroVideo.title}
@@ -104,7 +103,7 @@ export function Hero() {
                 </div>
                 <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#0899b8]/15 bg-[#111111] px-4 py-2 text-xs font-semibold text-[#cfcfcf]">
                   <PlayCircle className="h-4 w-4 text-[#0899b8]" />
-                  Trade School
+                  The Trade School
                 </span>
               </div>
 

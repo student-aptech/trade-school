@@ -12,13 +12,14 @@ export function CommunityWins() {
           Community Wins
         </p>
         <h2 className="section-display-heading mt-4 text-[44px] leading-[0.88] tracking-[-0.045em] text-[#080808] sm:text-[62px] lg:text-[72px]">
-          Real <span className="text-[#0899b8]">member</span> wins
+          A <span className="text-[#0899b8]">community</span> that
           <br />
-          moving all day
+          trades together
         </h2>
         <p className="mx-auto mt-4 max-w-[760px] text-base leading-8 text-[#080808]/62 sm:text-lg">
-          A live style wall of community wins, trade ideas, and shared
-          executions that keeps moving automatically.
+          Join a community of traders where every trade is shared, every win is
+          celebrated, and learning never stops. Real-time callouts, trade
+          insights, and wins are happening all day long.
         </p>
       </div>
 

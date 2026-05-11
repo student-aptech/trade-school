@@ -40,8 +40,8 @@ export function Plans() {
           trade school <span className="text-[#0899b8]">plan</span>
         </h2>
         <p className="mx-auto mt-4 max-w-[760px] text-base leading-8 text-[#080808]/62 sm:text-lg">
-          Pick the level that matches your learning stage and switch between PKR
-          and USD inside each card.
+          Whether you're starting or ready to master the markets, choose a plan
+          designed to take you step-by-step from beginner to pro.
         </p>
       </div>
 

@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState, type FormEvent } from "react";
+import { ExternalLink } from "lucide-react";
 import { pricingPlans } from "../data/appData";
 import { Modal } from "../components/widget/Modal";
 
@@ -33,7 +34,28 @@ const BINANCE_DETAILS = {
   binanceId: "88384923",
 };
 
-const paymentMethods = ["Bank Transfer", "JazzCash", "Easypaisa", "Binance"];
+const CARD_PAYMENT_LINKS = [
+  {
+    planName: "Foundation Plan",
+    url: "https://whop.com/the-trade-school/foundation-plan-c8/",
+  },
+  {
+    planName: "Growth Plan",
+    url: "https://whop.com/the-trade-school/growth-plan-ec-8234/",
+  },
+  {
+    planName: "Pro Trader Plan",
+    url: "https://whop.com/the-trade-school/pro-trader-plan-14/",
+  },
+];
+
+const paymentMethods = [
+  "Bank Transfer",
+  "JazzCash",
+  "Easypaisa",
+  "Binance",
+  "Card Payment",
+];
 
 function formatPrice(price: number) {
   return `PKR ${price.toLocaleString()}`;
@@ -318,7 +340,7 @@ export function Checkout() {
           </div>
         </div>
 
-        <div className="h-full rounded-[18px] border border-[#080808]/10 bg-white p-5 shadow-sm">
+        <div className="h-full rounded-[18px] border border-[#080808]/10 bg-white p-5 shadow-sm lg:min-h-[720px]">
           <h3 className="checkout-small-heading text-xl font-black uppercase tracking-[0.12em] text-[#080808]">
             Payment methods
           </h3>
@@ -418,10 +440,41 @@ export function Checkout() {
                 </p>
               </div>
             </div>
+
+            <div className="p-4">
+              <p className="checkout-small-heading text-sm font-black text-[#080808]">
+                Card Payment
+              </p>
+              <p className="mt-1 text-xs leading-5 text-[#080808]/56">
+                Pay securely by card through the matching plan link.
+              </p>
+              <div className="mt-3 grid gap-2">
+                {CARD_PAYMENT_LINKS.map((link) => {
+                  const isSelected = selectedPlan.name === link.planName;
+
+                  return (
+                    <a
+                      key={link.planName}
+                      href={link.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`flex items-center justify-between gap-3 rounded-[12px] border px-3 py-2.5 text-sm font-semibold transition ${
+                        isSelected
+                          ? "border-[#0899b8] bg-[#eefbfe] text-[#080808]"
+                          : "border-[#080808]/10 bg-white text-[#080808]/72 hover:border-[#0899b8]/45 hover:text-[#0899b8]"
+                      }`}
+                    >
+                      <span>{link.planName}</span>
+                      <ExternalLink className="h-4 w-4 shrink-0" />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
 
-        <section className="h-full rounded-[18px] border border-[#0899b8]/16 bg-[#080808] p-4 text-white shadow-[0_24px_80px_rgba(0,0,0,0.24)]">
+        <section className="h-full rounded-[18px] border border-[#0899b8]/16 bg-[#080808] p-5 text-white shadow-[0_24px_80px_rgba(0,0,0,0.24)] lg:min-h-[720px]">
           <h2 className="checkout-small-heading text-xl font-black tracking-[-0.03em]">
             Customer details
           </h2>
@@ -429,7 +482,7 @@ export function Checkout() {
             Transaction ID is optional. All other fields are required.
           </p>
 
-          <form className="mt-4 space-y-2" onSubmit={handleSubmit}>
+          <form className="mt-4 space-y-3" onSubmit={handleSubmit}>
             <label className="block">
               <span className="checkout-small-heading text-[11px] font-bold uppercase tracking-[0.12em] text-[#cfcfcf]">
                 Full Name
@@ -440,7 +493,7 @@ export function Checkout() {
                 required
                 name="fullName"
                 onInput={removeNumbersFromInput}
-                className="mt-1 h-8 w-full rounded-[9px] border border-white/10 bg-white px-3 text-sm text-[#080808] outline-none focus:border-[#0899b8]"
+                className="mt-1 h-9 w-full rounded-[9px] border border-white/10 bg-white px-3 text-sm text-[#080808] outline-none focus:border-[#0899b8]"
               />
             </label>
 
@@ -453,7 +506,7 @@ export function Checkout() {
                 required
                 type="email"
                 name="email"
-                className="mt-1 h-8 w-full rounded-[9px] border border-white/10 bg-white px-3 text-sm text-[#080808] outline-none focus:border-[#0899b8]"
+                className="mt-1 h-9 w-full rounded-[9px] border border-white/10 bg-white px-3 text-sm text-[#080808] outline-none focus:border-[#0899b8]"
               />
             </label>
 
@@ -466,7 +519,7 @@ export function Checkout() {
                 required
                 type="number"
                 name="whatsappNumber"
-                className="mt-1 h-8 w-full rounded-[9px] border border-white/10 bg-white px-3 text-sm text-[#080808] outline-none focus:border-[#0899b8]"
+                className="mt-1 h-9 w-full rounded-[9px] border border-white/10 bg-white px-3 text-sm text-[#080808] outline-none focus:border-[#0899b8]"
               />
             </label>
 
@@ -480,7 +533,7 @@ export function Checkout() {
                 name="selectedPlan"
                 value={selectedPlanName}
                 onChange={(event) => setSelectedPlanName(event.target.value)}
-                className="mt-1 h-8 w-full rounded-[9px] border border-white/10 bg-white px-3 text-sm text-[#080808] outline-none focus:border-[#0899b8]"
+                className="mt-1 h-9 w-full rounded-[9px] border border-white/10 bg-white px-3 text-sm text-[#080808] outline-none focus:border-[#0899b8]"
               >
                 {pricingPlans.map((plan) => (
                   <option key={plan.name} value={plan.name}>
@@ -500,7 +553,7 @@ export function Checkout() {
                 name="paymentMethod"
                 value={paymentMethod}
                 onChange={(event) => setPaymentMethod(event.target.value)}
-                className="mt-1 h-8 w-full rounded-[9px] border border-white/10 bg-white px-3 text-sm text-[#080808] outline-none focus:border-[#0899b8]"
+                className="mt-1 h-9 w-full rounded-[9px] border border-white/10 bg-white px-3 text-sm text-[#080808] outline-none focus:border-[#0899b8]"
               >
                 {paymentMethods.map((method) => (
                   <option key={method} value={method}>
@@ -517,7 +570,7 @@ export function Checkout() {
               <input
                 name="transactionId"
                 placeholder="Optional"
-                className="mt-1 h-8 w-full rounded-[9px] border border-white/10 bg-white px-3 text-sm text-[#080808] outline-none focus:border-[#0899b8]"
+                className="mt-1 h-9 w-full rounded-[9px] border border-white/10 bg-white px-3 text-sm text-[#080808] outline-none focus:border-[#0899b8]"
               />
             </label>
 

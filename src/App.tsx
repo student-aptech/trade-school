@@ -1,5 +1,5 @@
 ﻿import { useEffect, useState } from "react";
-import { Navbar } from "./components/navbar";
+import { Footer, Navbar } from "./components/layout";
 import { BenefitCards } from "./components/section/benefits";
 import { sectionIds } from "./data/appData";
 import { CommunityWins } from "./components/section/CommunityWins";
@@ -109,6 +109,8 @@ export default function App() {
         <FAQs />
 
         {/* <RiskDisclosure /> */}
+
+        <Footer />
       </section>
     </>
   );

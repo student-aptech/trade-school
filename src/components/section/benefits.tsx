@@ -93,21 +93,25 @@ export function BenefitCards() {
             className="relative z-10 mx-auto mt-24 grid w-full gap-8 overflow-hidden bg-white py-0 text-[#080808] lg:grid-cols-[0.76fr_1.24fr] lg:gap-12"
           >
             <div className="relative z-10 flex flex-col justify-center">
-              <h2 className="section-display-heading max-w-[430px] text-[54px] leading-[0.88] tracking-[-0.045em] text-[#080808] sm:text-[72px] lg:text-[80px]">
-                Data that
+              <h2 className="section-display-heading max-w-[500px] text-[42px] leading-[0.96] tracking-[-0.035em] text-[#080808] sm:text-[56px] lg:text-[62px] xl:text-[68px]">
+                Fixed
                 <br />
-                proves
+                Systems,
                 <br />
-                <span className="text-[#0899b8]">your growth</span>
+                Profitable
+                <br />
+                Trades,
+                <br />
+                <span className="text-[#0899b8]">Real Growth.</span>
               </h2>
 
-              <div className="mt-8 grid max-w-[420px] grid-cols-2 gap-3">
+              <div className="mt-8 grid max-w-[500px] grid-cols-2 gap-3">
                 {proofTabs.map((tab, index) => (
                   <button
                     key={tab.label}
                     type="button"
                     onClick={() => setActiveProofTab(index)}
-                    className={`h-12 rounded-full border px-4 text-[11px] font-bold uppercase tracking-[0.08em] transition ${
+                    className={`min-h-12 rounded-full border px-4 py-2.5 text-[10px] font-bold uppercase leading-tight tracking-[0.04em] transition sm:text-[11px] ${
                       activeProofTab === index
                         ? "border-[#0899b8] bg-[#0899b8] text-[#080808]"
                         : "border-[#080808]/12 bg-white text-[#080808]/62 shadow-sm hover:border-[#0899b8]/60 hover:text-[#0899b8]"

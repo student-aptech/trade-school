@@ -78,55 +78,55 @@ export const faqs: FAQItem[] = [
 
 export const heroBenefitCards: HeroBenefitCard[] = [
   {
-    title: "Clear Learning Path",
-    text: "Join a structured roadmap that takes you from basics to confident execution step by step.",
+    title: "Trading Community on Discord",
+    text: "Join a vibrant community of like-minded traders where you can share strategies, get support, and learn in a collaborative environment.",
     highlight: false,
   },
   {
-    title: "Real Trade Reviews",
-    text: "Study real chart examples, entry logic, trade management, and mistakes to avoid.",
+    title: "Real-time Trade Callouts",
+    text: "Receive instant trade alerts and actionable insights during live market hours, helping you stay on top of every opportunity.",
     highlight: true,
   },
   {
-    title: "Risk Control",
-    text: "Learn position sizing, stop placement, discipline, and rules that help protect your capital.",
+    title: "Live Market Analysis & Session",
+    text: "Participate in live market analysis sessions where we break down charts, trends, and setups in real-time for practical learning.",
     highlight: false,
   },
   {
-    title: "Mentor Support",
-    text: "Get guided lessons, weekly learning support, accountability, and a serious trading community.",
+    title: "Repeatable System - Setup",
+    text: "Learn a fixed, repeatable trading system that you can apply daily, providing consistency and confidence in your trading decisions.",
     highlight: false,
   },
 ];
 
 export const proofTabs = [
   {
-    label: "COMMUNITY WINS",
-    videoTitle: "Community Wins Preview",
+    label: "My Trading System & Setup",
+    videoTitle: "My Trading System & Setup",
     videoSrc:
       "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
     poster:
       "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1400&q=80",
   },
   {
-    label: "TRADE RECAPS",
-    videoTitle: "Trade Recaps Preview",
+    label: "Trading Community Overview",
+    videoTitle: "Trading Community Overview",
     videoSrc:
       "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     poster:
       "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=1400&q=80",
   },
   {
-    label: "FEEDBACK",
-    videoTitle: "Feedback Preview",
+    label: "Live Trade Analysis & Trading",
+    videoTitle: "Live Trade Analysis & Trading",
     videoSrc:
       "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
     poster:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=80",
   },
   {
-    label: "TESTIMONIAL",
-    videoTitle: "Testimonial Preview",
+    label: "Real Trade Recap Analysis",
+    videoTitle: "Real Trade Recap Analysis",
     videoSrc:
       "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
     poster:
@@ -187,112 +187,131 @@ export const tradingPartners: TradingPartner[] = [
 
 export const pricingPlans: PricingPlan[] = [
   {
-    name: "Starter",
+    name: "Foundation Plan",
     // Update plan prices here.
     price: { usd: 40, pkr: 11000 },
     periodLabel: "month",
     duration: "1 month",
     description:
-      "A focused one month access plan for traders who want to start learning with community support and live market context.",
+      "For beginners who want access to the basics of trading and focused community support.",
     // Update courses included in this plan here.
-    courses: ["Pakistan Stocks", "Forex Trading"],
+    courses: ["Price Action Trading Course - Basic to Advanced"],
     // Update services included in this plan here.
     services: [
-      "Private Discord community access",
-      "Setup based trade callouts",
-      "Weekly live value sessions",
-      "Market updates",
+      "Monthly access to lectures",
+      "Discord community access with limited interaction",
+      "Weekly live session recordings only",
+      "Daily and weekly market updates",
+      "Trade US Stocks, Futures, ETFs, Forex, and Crypto",
     ],
     paymentInstructions: [
-      "Pay the Starter plan amount using any listed payment method.",
+      "Pay the Foundation Plan amount using any listed payment method.",
       "Keep your transaction receipt or screenshot ready.",
       "Submit your details on WhatsApp for manual verification.",
     ],
     features: [
-      "Access to Pakistan Stocks, and Forex Trading Courses for 1 month",
-      "Private Trading Community Access - Discord",
-      "Proven Trade System and Setups - trade callouts setup based",
-      "Weekly Live Sessions for value addition",
-      "Market Updates",
+      "Access to Price Action trading courses from basic to advanced",
+      "Monthly access to lectures",
+      "Discord community access with limited interaction",
+      "Weekly live sessions - recording access only, no live session access",
+      "Market updates with daily and weekly insights",
+      "Not a blind buy and sell signal service",
+      "Trade US Stocks, Futures, ETFs, Forex, and Crypto",
     ],
-    discountText: "START HERE",
-    cta: "Join Starter",
+    discountText: "MONTHLY",
+    cta: "Join Foundation Plan",
     highlighted: false,
   },
   {
-    name: "Elite Mentorship",
+    name: "Pro Trader Plan",
     // Update plan prices here.
     price: { usd: 250, pkr: 68750 },
     originalPrice: { usd: 480, pkr: 132000 },
     periodLabel: "year",
     duration: "12 months",
     description:
-      "The complete premium bundle with lifetime course access, future course enrollment, and a full year of community access.",
+      "Ideal for advanced learners who want complete access to courses, insights, and priority support.",
     // Update courses included in this plan here.
     courses: [
+      "The Trade School Premium Trading Course",
       "VSA - Volume Spread Analysis",
-      "Pakistan Stocks",
-      "US Stocks",
-      "Forex Trading",
-      "Future courses including Fundamental Analysis and Financial Analysis with AI",
+      "Fundamental Analysis",
+      "Investing 1on1",
+      "Trading with AI",
+      "News Trading",
     ],
     // Update services included in this plan here.
     services: [
-      "12 months private Discord community access",
-      "Premium weekly live sessions",
-      "Setup based trade callouts",
-      "Market updates",
-      "Future course enrollment",
+      "Everything in the Foundation Plan and Growth Plan",
+      "Lifetime access to recorded lectures of all courses",
+      "Long-term investment suggestions and swing trade tracking",
+      "Market analysis and updates with AI-driven insights",
+      "Automatic enrollment in future courses and exclusive content",
+      "Trade US Stocks, Futures, ETFs, Forex, and Crypto",
+      "Breaking news",
+      "Trading charts",
+      "Priority support",
     ],
     paymentInstructions: [
-      "Pay the Elite Mentorship amount using any listed payment method.",
+      "Pay the Pro Trader Plan amount using any listed payment method.",
       "Keep your transaction receipt or screenshot ready.",
       "Submit your details on WhatsApp for manual verification.",
     ],
     features: [
-      "Complete Course Bundle: VSA - Volume Spread Analysis, Pakistan Stocks, US Stocks, and Forex - Lifetime Access",
-      "12 months Private Trading Community Access - Discord",
-      "Automatic Enrollment in Future Courses, including Fundamental Analysis and Financial Analysis with AI",
-      "Proven Trade System and Setups - trade callouts setup based",
-      "Weekly Live Sessions with premium value addition",
-      "Market Updates",
+      "All benefits from the Foundation Plan and Growth Plan",
+      "Access to The Trade School Premium Trading Course - VSA Volume Spread Analysis",
+      "Lifetime access to recorded lectures of all courses",
+      "Long-term investment suggestions plus swing trade tracking",
+      "Market analysis and updates with AI-driven insights",
+      "Automatic enrollment in future courses and exclusive content: Fundamental Analysis, Investing 1on1, Trading with AI, and News Trading",
+      "Trade US Stocks, Futures, ETFs, Forex, and Crypto",
+      "Breaking news",
+      "Trading charts",
+      "Priority support",
     ],
     discountText: "48% DISCOUNT",
-    cta: "Join Elite Mentorship",
+    cta: "Join Pro Trader Plan",
     highlighted: true,
   },
   {
-    name: "Pro Trader",
+    name: "Growth Plan",
     // Update plan prices here.
     price: { usd: 96, pkr: 26400 },
     originalPrice: { usd: 120, pkr: 33000 },
     periodLabel: "quarter",
     duration: "3 months",
     description:
-      "The best value for serious learners who want lifetime course access and a longer community runway.",
+      "For traders who want to build on the basics and access more advanced strategies consistently.",
     // Update courses included in this plan here.
-    courses: ["Pakistan Stocks", "Forex Trading"],
+    courses: ["EMA Clouds", "Price Action", "Advanced Trading Strategies"],
     // Update services included in this plan here.
     services: [
-      "3 months private Discord community access",
-      "Setup based trade callouts",
-      "Weekly live sessions",
-      "Market updates",
+      "Lifetime access to recorded lectures",
+      "Discord community access with more interaction and trade examples",
+      "Weekly live sessions with advanced strategies and trade callouts",
+      "Market analysis and updates",
+      "Access to Trade Tracker sheet",
+      "Trade US Stocks, Futures, ETFs, Forex, and Crypto",
+      "Breaking news",
+      "Trading charts",
     ],
     paymentInstructions: [
-      "Pay the Pro Trader amount using any listed payment method.",
+      "Pay the Growth Plan amount using any listed payment method.",
       "Keep your transaction receipt or screenshot ready.",
       "Submit your details on WhatsApp for manual verification.",
     ],
     features: [
-      "Lifetime Access to Pakistan Stocks, and Forex Courses",
-      "3 months Private Trading Community Access - Discord",
-      "Proven Trade System and Setups - trade callouts setup based",
-      "Weekly Live Sessions",
-      "Market Updates",
+      "Access to advanced trading strategies and courses: EMA Clouds and Price Action",
+      "Lifetime access to recorded lectures",
+      "Discord community access with more interaction and trade examples",
+      "Weekly live sessions with advanced strategies and trade callouts",
+      "Market analysis and updates with access to Trade Tracker sheet",
+      "Trade US Stocks, Futures, ETFs, Forex, and Crypto",
+      "Breaking news",
+      "Trading charts",
     ],
     discountText: "20% DISCOUNT",
-    cta: "Join Pro Trader",
+    cta: "Join Growth Plan",
     highlighted: false,
   },
 ];
